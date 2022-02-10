@@ -4,7 +4,7 @@ import { formatCurrency } from '../utils';
 
 defineProps({
     symbol: String,
-    price: Number
+    price: String
 })
 
 </script>

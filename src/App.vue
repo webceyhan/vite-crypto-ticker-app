@@ -21,4 +21,3 @@ const { listByPrice } = createApi();
     </div>
   </section>
 </template>
-
