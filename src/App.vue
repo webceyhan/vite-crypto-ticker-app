@@ -1,6 +1,7 @@
 <script setup>
 
 import { ref } from 'vue';
+import { makeUrl, formatCurrency } from './utils';
 
 const createSocket = (state) => {
   // define assets to be loaded
@@ -10,8 +11,7 @@ const createSocket = (state) => {
   ];
 
   // create url with query params
-  const url = new URL('wss://ws.coincap.io/prices');
-  url.search = new URLSearchParams({ assets });
+  const url = makeUrl('wss://ws.coincap.io/prices', { assets });
 
   // create socket
   const socket = new WebSocket(url);
@@ -26,18 +26,6 @@ const createSocket = (state) => {
 
 const prices = ref([]);
 const socket = createSocket(prices)
-
-// format currency with commas
-const formatCurrency = (value) => {
-  return (new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    // These options are needed to round to whole numbers if that's what you want.
-    //minimumFractionDigits: 0, // (this suffices for whole numbers, but will print 2500.10 as $2,500.1)
-    //maximumFractionDigits: 0, // (causes 2500.99 to be printed as $2,501)
-  })).format(value);
-}
-
 
 </script>
 
