@@ -1,7 +1,7 @@
 <script setup>
 
+import Ticker from './components/Ticker.vue';
 import { createApi } from './api';
-import { formatCurrency } from './utils';
 
 const { listByPrice } = createApi();
 
@@ -16,16 +16,7 @@ const { listByPrice } = createApi();
   <section class="container">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
       <div class="col" v-for="({ symbol, price }) in listByPrice" :key="symbol">
-        <div class="card text-light">
-          <div class="row g-0">
-            <div class="col">
-              <div class="h5 bg-secondary text-capitalize m-0 p-3">{{ symbol }}</div>
-            </div>
-            <div class="col">
-              <div class="bg-primary font-monospace p-3">{{ formatCurrency(price) }}</div>
-            </div>
-          </div>
-        </div>
+        <Ticker :symbol="symbol" :price="price" />
       </div>
     </div>
   </section>
