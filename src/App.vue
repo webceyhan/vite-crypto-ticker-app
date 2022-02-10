@@ -1,31 +1,9 @@
 <script setup>
 
-import { ref } from 'vue';
-import { makeUrl, formatCurrency } from './utils';
+import { createApi } from './api';
+import { formatCurrency } from './utils';
 
-const createSocket = (state) => {
-  // define assets to be loaded
-  const assets = [
-    'bitcoin', 'ethereum', 'litecoin', 'solana',
-    'polkadot', 'cardano', 'stellar', 'avax'
-  ];
-
-  // create url with query params
-  const url = makeUrl('wss://ws.coincap.io/prices', { assets });
-
-  // create socket
-  const socket = new WebSocket(url);
-
-  // define message listener
-  socket.onmessage = ({ data }) => {
-    state.value = { ...state.value, ...JSON.parse(data) };
-  };
-
-  return socket;
-}
-
-const prices = ref([]);
-const socket = createSocket(prices)
+const { state } = createApi();
 
 </script>
 
@@ -37,7 +15,7 @@ const socket = createSocket(prices)
 
   <section class="container">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-      <div class="col" v-for="(price, symbol) in prices" :key="symbol">
+      <div class="col" v-for="(price, symbol) in state" :key="symbol">
         <div class="card text-light">
           <div class="row g-0">
             <div class="col">
