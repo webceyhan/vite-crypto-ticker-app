@@ -15,8 +15,8 @@ const { listByPrice } = createApi();
 
   <section class="container">
     <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3">
-      <div class="col" v-for="({ symbol, price }) in listByPrice" :key="symbol">
-        <Ticker :symbol="symbol" :price="price" />
+      <div class="col" v-for="({ symbol, price, diff }) in listByPrice" :key="symbol">
+        <Ticker :symbol="symbol" :price="price" :diff="diff" />
       </div>
     </div>
   </section>

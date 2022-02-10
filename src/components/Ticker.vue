@@ -1,10 +1,11 @@
 <script setup>
 
-import { formatCurrency } from '../utils';
+import { formatCurrency, getDiffColor } from '../utils';
 
 defineProps({
     symbol: String,
-    price: String
+    price: String,
+    diff: Number,
 })
 
 </script>
@@ -15,8 +16,11 @@ defineProps({
             <div class="col">
                 <div class="h5 bg-secondary text-capitalize m-0 p-3">{{ symbol }}</div>
             </div>
-            <div class="col">
-                <div class="bg-primary font-monospace p-3">{{ formatCurrency(price) }}</div>
+            <div class="col text-dark">
+                <div
+                    class="font-monospace p-3"
+                    :class="getDiffColor(diff)"
+                >{{ formatCurrency(price) }}</div>
             </div>
         </div>
     </div>

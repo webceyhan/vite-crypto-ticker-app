@@ -24,17 +24,19 @@ export const createApi = () => {
     const socket = new WebSocket(url);
 
     // define message listener
-    socket.onmessage = ({ data }) =>
-        (state.value = {
-            ...state.value,
-            ...JSON.parse(data),
+    socket.onmessage = ({ data }) => {
+        Object.entries(JSON.parse(data)).forEach(([symbol, price]) => {
+            const oldPrice = state.value[symbol]?.price;
+            const diff = price > oldPrice ? 1 : price < oldPrice ? -1 : 0;
+            state.value[symbol] = { price, diff };
         });
+    };
 
     return {
         state,
         listByPrice: computed(() =>
             Object.entries(state.value)
-                .map(([symbol, price]) => ({ price, symbol }))
+                .map(([symbol, data]) => ({ symbol, ...data }))
                 .sort((a, b) => b.price - a.price)
         ),
     };
