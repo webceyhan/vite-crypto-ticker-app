@@ -1,4 +1,4 @@
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { makeUrl } from './utils';
 
 // define assets to be fetched
@@ -30,5 +30,12 @@ export const createApi = () => {
             ...JSON.parse(data),
         });
 
-    return { state };
+    return {
+        state,
+        listByPrice: computed(() =>
+            Object.entries(state.value)
+                .map(([symbol, price]) => ({ price, symbol }))
+                .sort((a, b) => b.price - a.price)
+        ),
+    };
 };
