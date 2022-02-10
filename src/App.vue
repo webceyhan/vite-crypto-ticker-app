@@ -8,7 +8,7 @@ const { listByPrice } = createApi();
 </script>
 
 <template>
-  <header class="container text-center my-5">
+  <header class="container text-center my-4">
     <h1 class="display-4">Vite Crypto Ticker</h1>
     <hr />
   </header>
