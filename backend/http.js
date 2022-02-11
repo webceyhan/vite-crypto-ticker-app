@@ -7,6 +7,9 @@ export const createHttpServer = (port, hostname) => {
     // create app
     const app = express();
 
+    // create socket to CoinCap
+    const socket = createSocket();
+
     // enable cors
     app.use(cors());
 
@@ -19,8 +22,17 @@ export const createHttpServer = (port, hostname) => {
         res.header(SSE_HEADERS);
         res.flushHeaders();
 
-        createSocket().on('message', (state) => {
-            res.write(`data: ${JSON.stringify(state)}\n\n`);
+        // define exit handler
+        let stop = false;
+
+        const loop = setInterval(() => {
+            if (stop) clearInterval(loop);
+            else res.write(`data: ${JSON.stringify(socket.state)}\n\n`);
+        }, 1000);
+
+        req.on('close', () => {
+            res.end();
+            stop = true;
         });
     });
 

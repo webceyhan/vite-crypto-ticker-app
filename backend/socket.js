@@ -5,9 +5,6 @@ export const createSocket = () => {
     // define internal state
     const state = {};
 
-    // define message listener
-    const listeners = {};
-
     // create socket
     const socket = new WebSocket(COINCAP_URL);
 
@@ -18,11 +15,7 @@ export const createSocket = () => {
             const diff = price > oldPrice ? 1 : price < oldPrice ? -1 : 0;
             state[symbol] = { price, diff };
         });
-
-        listeners['message'] && listeners['message'](state);
     };
 
-    return {
-        on: (event, listener) => (listeners[event] = listener),
-    };
+    return { state };
 };
