@@ -3,6 +3,17 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webceyhan/vite-crypto-ticker-app.git"
+  },
+  "keywords": [],
+  "author": "Evren Ceyhan",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/webceyhan/vite-crypto-ticker-app/issues"
+  },
+  "homepage": "https://github.com/webceyhan/vite-crypto-ticker-app#readme",
   "scripts": {
     "start": "node backend/main.js",
     "dev": "concurrently \"npm:dev:backend\" \"npm:dev:frontend\" ",
