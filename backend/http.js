@@ -1,30 +1,22 @@
-import { fileURLToPath } from 'url';
-import { dirname, join } from 'path';
 import express from 'express';
 import cors from 'cors';
+import { SSE_HEADERS, WWW_DIR } from './constants.js';
 import { createSocket } from './socket.js';
-
-// define constants
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const wwwDir = join(__dirname, '../dist');
 
 export const createHttpServer = (port, hostname) => {
     // create app
     const app = express();
 
+    // enable cors
     app.use(cors());
 
     // serve static client files
-    app.use(express.static(wwwDir));
+    app.use(express.static(WWW_DIR));
 
     // define sse route
     app.get('/sse', (req, res) => {
-        res.setHeader('Content-Type', 'text/event-stream');
-        res.setHeader('Cache-Control', 'no-cache');
-        res.setHeader('Connection', 'keep-alive');
-
-        // send the headers to client first
+        // set and flush SSE headers
+        res.header(SSE_HEADERS);
         res.flushHeaders();
 
         createSocket().on('message', (state) => {
@@ -33,7 +25,7 @@ export const createHttpServer = (port, hostname) => {
     });
 
     // define catch-all route for app
-    app.get('*', (req, res) => res.sendFile(`${wwwDir}/index.html`));
+    app.get('*', (req, res) => res.sendFile(`${WWW_DIR}/index.html`));
 
     // start listening
     app.listen(port, hostname, () =>

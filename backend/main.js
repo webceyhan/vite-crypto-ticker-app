@@ -1,9 +1,5 @@
-import  { createHttpServer } from './http.js'
-// import  { createSocketServer } from './socket.js'
+import { HOSTNAME, PORT } from './constants.js';
+import { createHttpServer } from './http.js';
 
-const PORT = process.env.PORT || 8080;
-const HOSTNAME = process.env.HOSTNAME || '0.0.0.0';
-
-// start servers on same port
+// start server
 const server = createHttpServer(PORT, HOSTNAME);
-// const wss = createSocketServer(server);
