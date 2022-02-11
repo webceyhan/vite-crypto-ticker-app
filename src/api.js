@@ -1,35 +1,21 @@
 import { computed, ref } from 'vue';
-import { makeUrl } from './utils';
 
-// define assets to be fetched
-const assets = [
-    'bitcoin',
-    'ethereum',
-    'litecoin',
-    'solana',
-    'avax',
-    'polkadot',
-    'cardano',
-    'stellar',
-];
-
-// create url with query params
-const url = makeUrl('wss://ws.coincap.io/prices', { assets });
+// define environment vars
+const IS_DEV = import.meta.env.DEV;
+const HOST_DEV = `http://${location.hostname}:8080`;
+const HOST_PROD = location.origin;
+const API_URL = `${IS_DEV ? HOST_DEV : HOST_PROD}/sse`;
 
 export const createApi = () => {
     // define state
     const state = ref({});
 
-    // create socket
-    const socket = new WebSocket(url);
+    // define event source
+    const es = new EventSource(API_URL);
 
     // define message listener
-    socket.onmessage = ({ data }) => {
-        Object.entries(JSON.parse(data)).forEach(([symbol, price]) => {
-            const oldPrice = state.value[symbol]?.price;
-            const diff = price > oldPrice ? 1 : price < oldPrice ? -1 : 0;
-            state.value[symbol] = { price, diff };
-        });
+    es.onmessage = ({ data }) => {
+        state.value = JSON.parse(data);
     };
 
     return {
