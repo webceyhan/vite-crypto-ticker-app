@@ -33,6 +33,6 @@
     "@vitejs/plugin-vue": "^2.2.0",
     "concurrently": "^7.0.0",
     "nodemon": "^2.0.15",
-    "vite": "^2.8.0"
+    "vite": "^2.9.6"
   }
 }
