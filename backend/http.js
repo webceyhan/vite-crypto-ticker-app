@@ -3,7 +3,7 @@ import cors from 'cors';
 import { SSE_HEADERS, WWW_DIR } from './constants.js';
 import { createSocket } from './socket.js';
 
-export const createHttpServer = (port, hostname) => {
+export const createHttpServer = (port) => {
     // create app
     const app = express();
 
@@ -40,8 +40,8 @@ export const createHttpServer = (port, hostname) => {
     app.get('*', (req, res) => res.sendFile(`${WWW_DIR}/index.html`));
 
     // start listening
-    const server = app.listen(port, hostname, () =>
-        console.log(`server started: http://${hostname}:${port}`)
+    const server = app.listen(port, () =>
+        console.log(`server started on port: ${port}`)
     );
 
     server.keepAliveTimeout = 120 * 1000;

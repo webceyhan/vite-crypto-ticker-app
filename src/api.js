@@ -2,7 +2,7 @@ import { computed, ref } from 'vue';
 
 // define environment vars
 const IS_DEV = import.meta.env.DEV;
-const HOST_DEV = `http://${location.hostname}:8080`;
+const HOST_DEV = `http://${location.hostname}:3001`;
 const HOST_PROD = location.origin;
 const API_URL = `${IS_DEV ? HOST_DEV : HOST_PROD}/sse`;
 
