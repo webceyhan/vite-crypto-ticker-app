@@ -40,9 +40,12 @@ export const createHttpServer = (port, hostname) => {
     app.get('*', (req, res) => res.sendFile(`${WWW_DIR}/index.html`));
 
     // start listening
-    app.listen(port, hostname, () =>
+    const server = app.listen(port, hostname, () =>
         console.log(`server started: http://${hostname}:${port}`)
     );
+
+    server.keepAliveTimeout = 120 * 1000;
+    server.headersTimeout = 120 * 1000;
 
     return app;
 };

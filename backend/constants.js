@@ -11,7 +11,7 @@ export const ROOT_DIR = dirname(__dirname);
 export const WWW_DIR = join(ROOT_DIR, 'dist');
 
 // network constants
-export const PORT = process.env.PORT || 8080;
+export const PORT = process.env.PORT || 3001;
 export const HOSTNAME = process.env.HOSTNAME || '0.0.0.0';
 
 // SSE constants
